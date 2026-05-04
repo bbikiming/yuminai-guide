@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    
+    <linearGradient id="yGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7C3AED"></stop>
+      <stop offset="50%" stop-color="#5B5DEF"></stop>
+      <stop offset="100%" stop-color="#3B82F6"></stop>
+    </linearGradient>
+
+    
+    <linearGradient id="triangleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"></stop>
+      <stop offset="100%" stop-color="#6366F1"></stop>
+    </linearGradient>
+
+    
+    <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A78BFA"></stop>
+      <stop offset="100%" stop-color="#60A5FA"></stop>
+    </linearGradient>
+
+    
+    <filter id="yShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6"></feGaussianBlur>
+      <feOffset dx="0" dy="4" result="offsetblur"></feOffset>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.18"></feFuncA>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode></feMergeNode>
+        <feMergeNode in="SourceGraphic"></feMergeNode>
+      </feMerge>
+    </filter>
+  </defs>
+
+  
+  <rect x="100" y="100" width="824" height="824" rx="180" ry="180" fill="#FFFFFF"></rect>
+
+  
+  <rect x="100" y="100" width="824" height="824" rx="180" ry="180" fill="none" stroke="#E5E7EB" stroke-width="2"></rect>
+
+  
+  <circle cx="512" cy="540" r="280" fill="none" stroke="url(#circleGradient)" stroke-width="6" opacity="0.45"></circle>
+
+  
+  <circle cx="512" cy="260" r="10" fill="#7C3AED" opacity="0.85"></circle>
+  <circle cx="792" cy="540" r="10" fill="#5B5DEF" opacity="0.85"></circle>
+  <circle cx="512" cy="820" r="10" fill="#3B82F6" opacity="0.85"></circle>
+  <circle cx="232" cy="540" r="10" fill="#5B5DEF" opacity="0.85"></circle>
+
+  
+  <g filter="url(#yShadow)">
+    <polygon points="512,210 472,290 552,290" fill="url(#triangleGradient)"></polygon>
+  </g>
+
+  
+  <g filter="url(#yShadow)">
+    
+    <path d="M 360,340 L 512,540 L 512,720 L 484,720 L 484,548 L 332,348 Z" fill="url(#yGradient)"></path>
+    
+    <path d="M 664,340 L 512,540 L 512,720 L 540,720 L 540,548 L 692,348 Z" fill="url(#yGradient)"></path>
+    
+    <rect x="484" y="540" width="56" height="200" fill="url(#yGradient)" rx="8"></rect>
+  </g>
+
+  
+  <g stroke="url(#yGradient)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <polyline points="284,470 224,540 284,610"></polyline>
+  </g>
+
+  
+  <g stroke="url(#yGradient)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <polyline points="740,470 800,540 740,610"></polyline>
+  </g>
+
+  
+  <g stroke="#A78BFA" stroke-width="3" fill="none" opacity="0.35">
+    
+    <path d="M 200,750 L 260,750 L 280,770 L 340,770"></path>
+    <circle cx="200" cy="750" r="4" fill="#A78BFA"></circle>
+    <circle cx="340" cy="770" r="4" fill="#A78BFA"></circle>
+    
+    <path d="M 824,750 L 764,750 L 744,770 L 684,770"></path>
+    <circle cx="824" cy="750" r="4" fill="#60A5FA"></circle>
+    <circle cx="684" cy="770" r="4" fill="#60A5FA"></circle>
+  </g>
+
+  
+  <g stroke="#A78BFA" stroke-width="3" fill="none" opacity="0.30">
+    <path d="M 380,260 L 380,220 L 420,220"></path>
+    <path d="M 644,260 L 644,220 L 604,220"></path>
+  </g>
+</svg>
