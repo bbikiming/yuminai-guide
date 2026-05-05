@@ -2609,6 +2609,505 @@
   .grid { gap: var(--sp-4); }
   .grid-3, .grid-4 { gap: var(--sp-3); }
 
+  /* ============================================================
+     CHAPTER 10 — EVERYONE / RESPONSIVE / ONBOARDING / A11Y
+     ============================================================ */
+
+  /* ----- 10.1 Onboarding flow ----- */
+  .onboard-flow {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    counter-reset: obStep;
+    position: relative;
+  }
+  .onboard-flow::before {
+    /* horizontal connecting rail behind cards */
+    content: ""; position: absolute;
+    left: 6%; right: 6%; top: 130px; height: 2px;
+    background: linear-gradient(90deg, var(--brand-purple), var(--brand-indigo), var(--accent));
+    opacity: 0.30;
+    border-radius: 2px;
+    z-index: 0;
+  }
+  .ob-step {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    position: relative; z-index: 1;
+    box-shadow: 0 18px 40px -28px rgba(0,0,0,0.55);
+  }
+  .ob-step::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brand-purple), var(--brand-indigo), var(--accent));
+    opacity: 0.65;
+  }
+  .ob-cap {
+    padding: 12px 14px 8px;
+    border-bottom: 1px solid var(--hairline);
+    display: flex; justify-content: space-between; align-items: baseline;
+    background: rgba(255,255,255,0.02);
+  }
+  .ob-cap .num {
+    font: 700 10px var(--font-mono); letter-spacing: 0.14em;
+    color: var(--accent);
+  }
+  .ob-cap .num::before {
+    counter-increment: obStep;
+    content: "STEP " counter(obStep) " · ";
+    color: var(--text-3);
+  }
+  .ob-cap .clock {
+    font: 600 10px var(--font-mono); color: var(--text-3); letter-spacing: 0.06em;
+  }
+  .ob-title {
+    padding: 10px 14px 0;
+    font: 600 14.5px var(--font-sans); letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .ob-deck {
+    padding: 4px 14px 12px;
+    font: 500 12.5px var(--font-sans); color: var(--text-2); line-height: 1.5;
+  }
+  .ob-screen {
+    margin: 0 12px 12px;
+    background: linear-gradient(180deg, #1A1817 0%, #0F0E0D 100%);
+    border-radius: 10px; padding: 12px;
+    border: 1px solid var(--hairline-2);
+    display: flex; flex-direction: column; gap: 8px;
+    min-height: 152px;
+    position: relative;
+  }
+  .ob-screen::before {
+    content: ""; position: absolute; left: 12px; top: 12px;
+    width: 36px; height: 6px; border-radius: 3px;
+    background: linear-gradient(90deg, #ff6058, #ffbe2f, #2bc83d);
+    opacity: 0.55;
+  }
+  .ob-screen .ob-eyebrow {
+    margin-top: 14px;
+    font: 600 9.5px var(--font-mono); letter-spacing: 0.14em;
+    color: var(--text-3);
+  }
+  .ob-pick {
+    display: grid; grid-template-columns: 18px 1fr auto; gap: 8px;
+    padding: 7px 9px; border-radius: 7px;
+    border: 1px solid var(--hairline);
+    background: rgba(255,255,255,0.02);
+    font-size: 12px; color: var(--text-2);
+    align-items: center;
+  }
+  .ob-pick.sel { border-color: var(--accent); background: rgba(34,200,224,0.08); color: var(--text); }
+  .ob-pick .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 1.5px solid var(--text-3); position: relative;
+  }
+  .ob-pick.sel .dot { border-color: var(--accent); }
+  .ob-pick.sel .dot::after {
+    content: ""; position: absolute; inset: 2px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .ob-pick .tag {
+    font: 600 9px var(--font-mono); color: var(--text-3); letter-spacing: 0.08em;
+    padding: 2px 6px; border-radius: 4px;
+    background: rgba(255,255,255,0.03);
+  }
+  .ob-pick.sel .tag { color: var(--accent); background: rgba(34,200,224,0.12); }
+  .ob-conn {
+    display: grid; grid-template-columns: 16px 1fr auto; gap: 8px;
+    padding: 5px 8px; border-radius: 6px;
+    background: rgba(255,255,255,0.02);
+    font: 500 11.5px var(--font-sans); color: var(--text-2);
+    align-items: center;
+  }
+  .ob-conn .ico { width: 12px; height: 12px; border-radius: 3px; }
+  .ob-conn .ico.cl { background: var(--agent-claude); }
+  .ob-conn .ico.co { background: var(--agent-codex); }
+  .ob-conn .ico.ob { background: var(--brand-lavender); }
+  .ob-conn .ico.tg { background: var(--brand-blue); }
+  .ob-conn .pill-mini {
+    font: 600 9px var(--font-mono); padding: 1px 6px; border-radius: 999px;
+    color: var(--success); background: rgba(143,201,153,0.14); border: 1px solid rgba(143,201,153,0.30);
+    letter-spacing: 0.06em;
+  }
+  .ob-conn .pill-mini.skip { color: var(--text-3); background: rgba(255,255,255,0.04); border-color: var(--hairline); }
+  .ob-screen .ob-input {
+    margin-top: auto;
+    border: 1px solid var(--hairline-2);
+    border-radius: 8px; padding: 8px 10px;
+    font: 500 11.5px var(--font-mono); color: var(--text-2);
+    background: rgba(255,255,255,0.03);
+    position: relative;
+  }
+  .ob-screen .ob-input::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--agent-claude);
+  }
+  .ob-screen .ob-input .cur {
+    display: inline-block; width: 2px; height: 11px; background: var(--accent);
+    vertical-align: -1px; animation: blink 1.2s steps(1) infinite;
+  }
+
+  /* ----- 10.2 Beginner mode toggle ----- */
+  .bm-pair {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .bm-side {
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    background: var(--surface);
+    padding: 16px 16px 14px;
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .bm-side::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px;
+  }
+  .bm-side.on::before { background: linear-gradient(90deg, var(--success), color-mix(in oklab, var(--success), #FFFFFF 20%)); }
+  .bm-side.off::before { background: linear-gradient(90deg, var(--text-3), var(--text-2)); }
+  .bm-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .bm-head .lab {
+    font: 700 10.5px var(--font-mono); letter-spacing: 0.14em;
+    color: var(--text-3);
+  }
+  .bm-side.on .bm-head .lab { color: var(--success); }
+  .bm-head .switch {
+    display: inline-flex; align-items: center; gap: 6px;
+    font: 600 11px var(--font-mono); letter-spacing: 0.08em;
+    color: var(--text-2);
+  }
+  .bm-head .switch .knob {
+    width: 28px; height: 16px; border-radius: 999px;
+    background: var(--surface-hi); border: 1px solid var(--hairline-2);
+    position: relative;
+  }
+  .bm-head .switch .knob::after {
+    content: ""; position: absolute; top: 1px; left: 1px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--text-3);
+    transition: transform .25s ease;
+  }
+  .bm-side.on .bm-head .switch .knob {
+    background: rgba(143,201,153,0.18); border-color: var(--success);
+  }
+  .bm-side.on .bm-head .switch .knob::after {
+    transform: translateX(12px); background: var(--success);
+    box-shadow: 0 0 8px rgba(143,201,153,0.5);
+  }
+  .bm-title {
+    font: 600 17px var(--font-sans); letter-spacing: -0.012em; margin: 0 0 4px;
+  }
+  .bm-deck {
+    font: 500 13px var(--font-sans); color: var(--text-2); line-height: 1.5;
+    margin: 0 0 12px;
+  }
+  .bm-mock {
+    background: linear-gradient(180deg, var(--bg) 0%, color-mix(in oklab, var(--bg) 95%, white 5%) 100%);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex; flex-direction: column; gap: 6px;
+    flex: 1;
+  }
+  .bm-row {
+    display: grid; grid-template-columns: 14px 1fr auto; gap: 8px;
+    padding: 5px 8px; border-radius: 5px;
+    font-size: 12px; color: var(--text);
+    align-items: center;
+  }
+  .bm-row .ico { width: 10px; height: 10px; border-radius: 3px; background: var(--text-3); }
+  .bm-row .ico.k { background: var(--agent-claude); }
+  .bm-row .ico.c { background: var(--accent); }
+  .bm-row .ico.p { background: var(--brand-lavender); }
+  .bm-row .ico.m { background: var(--brand-blue); }
+  .bm-row .badge {
+    font: 600 9.5px var(--font-mono); letter-spacing: 0.08em;
+    padding: 1px 6px; border-radius: 4px;
+    background: rgba(255,255,255,0.04); color: var(--text-3);
+    border: 1px solid var(--hairline);
+  }
+  .bm-row.adv {
+    color: var(--text-3);
+    background: repeating-linear-gradient(135deg, transparent 0 6px, rgba(255,255,255,0.025) 6px 7px);
+    border-radius: 5px;
+  }
+  .bm-row.adv .badge { color: var(--accent); border-color: rgba(34,200,224,0.30); background: rgba(34,200,224,0.06); }
+  .bm-row.hidden {
+    opacity: 0;
+    height: 0; padding: 0; margin: 0; pointer-events: none;
+    transition: opacity .3s, height .3s ease;
+  }
+  .bm-divider {
+    display: flex; align-items: center; gap: 8px;
+    font: 600 9.5px var(--font-mono); color: var(--text-3); letter-spacing: 0.10em;
+    margin: 4px 0 2px; padding: 0 6px;
+  }
+  .bm-divider::after {
+    content: ""; flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--hairline), transparent);
+  }
+
+  /* ----- 10.3 Layout matrix ----- */
+  .layout-matrix {
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    align-items: stretch;
+    counter-reset: lmStep;
+  }
+  .lm-slot {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 14px 12px 12px;
+    display: flex; flex-direction: column; gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .lm-slot::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  }
+  .lm-slot.tiny::before { background: var(--text-3); }
+  .lm-slot.compact::before { background: var(--brand-lavender); }
+  .lm-slot.medium::before { background: var(--brand-indigo); }
+  .lm-slot.regular::before { background: var(--accent); }
+  .lm-slot.wide::before { background: var(--success); }
+  .lm-cap {
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .lm-cap .name {
+    font: 700 11.5px var(--font-mono); letter-spacing: 0.10em; text-transform: uppercase;
+    color: var(--text);
+  }
+  .lm-slot.tiny .lm-cap .name { color: var(--text-2); }
+  .lm-slot.compact .lm-cap .name { color: var(--brand-lavender); }
+  .lm-slot.medium .lm-cap .name { color: var(--brand-indigo); }
+  .lm-slot.regular .lm-cap .name { color: var(--accent); }
+  .lm-slot.wide .lm-cap .name { color: var(--success); }
+  .lm-cap .px {
+    font: 600 10px var(--font-mono); color: var(--text-3); letter-spacing: 0.05em;
+  }
+  .lm-frame {
+    width: 100%; aspect-ratio: 1.18 / 1;
+    border: 1px solid var(--hairline-2);
+    border-radius: 8px;
+    background: linear-gradient(180deg, #1A1817 0%, #0F0E0D 100%);
+    display: grid;
+    overflow: hidden;
+    position: relative;
+    padding: 4px;
+    gap: 4px;
+  }
+  .lm-frame.tiny    { grid-template-columns: 1fr; }
+  .lm-frame.compact { grid-template-columns: 1fr; }
+  .lm-frame.medium  { grid-template-columns: 28px 1fr; }
+  .lm-frame.regular { grid-template-columns: 38px 1fr; }
+  .lm-frame.wide    { grid-template-columns: 38px 1fr 36px; }
+  .lm-side, .lm-main, .lm-insp {
+    border-radius: 5px;
+    position: relative;
+  }
+  .lm-side { background: linear-gradient(180deg, rgba(124,58,237,0.18), rgba(124,58,237,0.06)); border: 1px solid rgba(124,58,237,0.30); }
+  .lm-main {
+    background: linear-gradient(180deg, rgba(34,200,224,0.10), rgba(34,200,224,0.03));
+    border: 1px solid rgba(34,200,224,0.22);
+    display: flex; flex-direction: column; padding: 4px 5px 5px; gap: 3px;
+  }
+  .lm-main::before {
+    content: ""; height: 3px; width: 60%;
+    background: rgba(34,200,224,0.40); border-radius: 2px; margin-bottom: 2px;
+  }
+  .lm-main::after {
+    content: ""; flex: 1; border-radius: 3px;
+    background: repeating-linear-gradient(180deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 5px);
+  }
+  .lm-insp { background: linear-gradient(180deg, rgba(143,201,153,0.16), rgba(143,201,153,0.04)); border: 1px solid rgba(143,201,153,0.30); }
+  .lm-frame.tiny::after,
+  .lm-frame.compact::after {
+    content: "";
+    position: absolute; left: 4px; bottom: 4px;
+    width: calc(100% - 8px); height: 12px;
+    background: linear-gradient(180deg, rgba(124,58,237,0.18), rgba(124,58,237,0.06));
+    border: 1px solid rgba(124,58,237,0.30);
+    border-radius: 3px;
+    /* tiny+compact: sidebar collapses into a bottom drawer hint */
+  }
+  .lm-frame.tiny .lm-side, .lm-frame.compact .lm-side { display: none; }
+  .lm-list {
+    display: flex; flex-direction: column; gap: 4px;
+    font: 500 11px var(--font-sans); color: var(--text-2);
+  }
+  .lm-list li {
+    display: grid; grid-template-columns: 10px 1fr; gap: 6px;
+    align-items: center;
+  }
+  .lm-list li::before {
+    content: ""; width: 5px; height: 5px; border-radius: 50%;
+    background: currentColor; opacity: 0.45;
+    margin-left: 2px;
+  }
+  .lm-list { list-style: none; padding: 0; margin: 0; }
+
+  /* ----- 10.4 A11y pillars ----- */
+  .a11y-pillars {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .a11y-card {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 18px 18px 16px;
+    display: flex; flex-direction: column; gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .a11y-card::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0;
+    height: 3px;
+  }
+  .a11y-card.contrast::before { background: linear-gradient(90deg, #FFFFFF, var(--text-2)); }
+  .a11y-card.voice::before    { background: linear-gradient(90deg, var(--brand-lavender), var(--brand-purple)); }
+  .a11y-card.vctl::before     { background: linear-gradient(90deg, var(--accent), var(--brand-blue)); }
+  .a11y-card.focus::before    { background: linear-gradient(90deg, var(--warning), color-mix(in oklab, var(--warning), #FFFFFF 18%)); }
+  .a11y-cap {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .a11y-cap .glyph {
+    width: 32px; height: 32px; border-radius: 9px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--hairline);
+    color: var(--accent);
+  }
+  .a11y-card.contrast .a11y-cap .glyph { color: #FFFFFF; }
+  .a11y-card.voice .a11y-cap .glyph    { color: var(--brand-lavender); }
+  .a11y-card.vctl .a11y-cap .glyph     { color: var(--accent); }
+  .a11y-card.focus .a11y-cap .glyph    { color: var(--warning); }
+  .a11y-cap .name {
+    font: 700 11.5px var(--font-mono); letter-spacing: 0.10em; text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .a11y-card .h {
+    font: 600 17px var(--font-sans); letter-spacing: -0.012em; margin: 0;
+  }
+  .a11y-card .d {
+    font: 500 13px var(--font-sans); color: var(--text-2); line-height: 1.55; margin: 0;
+  }
+  .a11y-demo {
+    margin-top: 4px;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    padding: 12px;
+    background: linear-gradient(180deg, var(--bg) 0%, color-mix(in oklab, var(--bg) 92%, white 8%) 100%);
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  /* contrast bars */
+  .ct-stack { display: flex; flex-direction: column; gap: 6px; }
+  .ct-row {
+    display: grid; grid-template-columns: 1fr auto; gap: 10px;
+    padding: 7px 10px; border-radius: 6px;
+    font: 500 12px var(--font-sans);
+    align-items: center;
+  }
+  .ct-row.pass { background: #1A1817; color: #F0EEEC; }
+  .ct-row.fail { background: #1A1817; color: #6B6663; border: 1px dashed var(--hairline-2); }
+  .ct-row .ratio {
+    font: 700 10.5px var(--font-mono); letter-spacing: 0.04em;
+    padding: 2px 7px; border-radius: 999px;
+  }
+  .ct-row.pass .ratio { color: var(--success); background: rgba(143,201,153,0.18); }
+  .ct-row.fail .ratio { color: var(--danger); background: rgba(217,115,115,0.16); }
+  /* voiceover sample */
+  .vo-sample {
+    display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center;
+    padding: 8px 10px; border-radius: 8px;
+    border: 1px solid rgba(167,139,250,0.30); background: rgba(167,139,250,0.06);
+    font: 500 12px var(--font-sans); color: var(--text);
+  }
+  .vo-sample .qt {
+    font: 600 10.5px var(--font-mono); color: var(--brand-lavender); letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .vo-sample .body { color: var(--text-2); font-style: italic; }
+  /* voice control commands */
+  .vc-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .vc-cmd {
+    display: grid; grid-template-columns: auto 1fr; gap: 8px;
+    padding: 6px 9px; border-radius: 6px;
+    border: 1px solid var(--hairline);
+    background: rgba(34,200,224,0.04);
+    font: 500 11.5px var(--font-sans); color: var(--text);
+    align-items: center;
+  }
+  .vc-cmd .say {
+    font: 700 9.5px var(--font-mono); color: var(--accent); letter-spacing: 0.10em;
+  }
+  /* focus ring demo */
+  .fr-demo {
+    display: flex; gap: 12px; align-items: center;
+  }
+  .fr-btn {
+    flex: 1;
+    padding: 10px 14px; border-radius: 8px;
+    font: 600 12.5px var(--font-sans);
+    background: var(--surface-hi); color: var(--text);
+    border: 1px solid var(--hairline);
+    text-align: center;
+  }
+  .fr-btn.foc {
+    outline: 2px solid var(--warning);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px rgba(212,184,106,0.20);
+  }
+  .fr-tag {
+    font: 600 9.5px var(--font-mono); letter-spacing: 0.10em;
+    color: var(--text-3);
+  }
+  .fr-tag.on { color: var(--warning); }
+
+  /* Hover lifts */
+  .ob-step, .bm-side, .lm-slot, .a11y-card {
+    transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+  }
+  .ob-step:hover, .bm-side:hover, .lm-slot:hover, .a11y-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -22px rgba(0,0,0,0.55), 0 1px 0 rgba(255,255,255,0.04) inset;
+  }
+
+  /* Reveal hooks for chapter 10: when .a11y-pillars is .in, animate the contrast meters */
+  @keyframes ratioPulse {
+    0% { transform: scaleX(0); transform-origin: left; }
+    100% { transform: scaleX(1); transform-origin: left; }
+  }
+  .a11y-pillars.in .ct-row .ratio {
+    animation: fadeUp .6s cubic-bezier(.2,.7,.2,1) both;
+    animation-delay: .25s;
+  }
+  /* Subtle ring pulse on focus demo */
+  @keyframes focusBreath {
+    0%,100% { box-shadow: 0 0 0 6px rgba(212,184,106,0.20); }
+    50%     { box-shadow: 0 0 0 10px rgba(212,184,106,0.10); }
+  }
+  .a11y-card.focus .fr-btn.foc { animation: focusBreath 2.6s ease-in-out infinite; }
+
+  /* Mobile tuning for chapter 10 */
+  @media (max-width: 1024px) {
+    .onboard-flow { grid-template-columns: 1fr; }
+    .onboard-flow::before { display: none; }
+    .layout-matrix { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .a11y-pillars { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .bm-pair { grid-template-columns: 1fr; }
+    .layout-matrix { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .vc-list { grid-template-columns: 1fr; }
+  }
+
 </style>
 </head>
 <body>
@@ -2711,6 +3210,14 @@
       <symbol id="i-ch-advanced" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M 12 8.5 A 3.5 3.5 0 1 1 8.5 12 A 3.5 3.5 0 0 1 12 8.5 Z"/>
         <path d="M 12 3 L 12 6 M 12 18 L 12 21 M 3 12 L 6 12 M 18 12 L 21 12 M 5.6 5.6 L 7.7 7.7 M 16.3 16.3 L 18.4 18.4 M 5.6 18.4 L 7.7 16.3 M 16.3 7.7 L 18.4 5.6"/>
+      </symbol>
+      <!-- 10 everyone — people fit in a frame -->
+      <symbol id="i-ch-everyone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="5" width="20" height="14" rx="2"/>
+        <circle cx="8" cy="11" r="1.8"/>
+        <circle cx="16" cy="11" r="1.8"/>
+        <path d="M 5 17 C 5 15.4 6.4 14.2 8 14.2 C 9.6 14.2 11 15.4 11 17"/>
+        <path d="M 13 17 C 13 15.4 14.4 14.2 16 14.2 C 17.6 14.2 19 15.4 19 17"/>
       </symbol>
       <!-- A shortcuts — keyboard -->
       <symbol id="i-ch-shortcuts" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -2964,6 +3471,7 @@
         <li><a href="#git" data-link><svg class="i i-16"><use href="#i-ch-git"/></svg><span class="num">07</span><span>버전 관리</span></a></li>
         <li><a href="#usage" data-link><svg class="i i-16"><use href="#i-ch-usage"/></svg><span class="num">08</span><span>비용·생산성</span></a></li>
         <li><a href="#advanced" data-link><svg class="i i-16"><use href="#i-ch-advanced"/></svg><span class="num">09</span><span>고급 자동화</span></a></li>
+        <li><a href="#everyone" data-link><svg class="i i-16"><use href="#i-ch-everyone"/></svg><span class="num">10</span><span>누구나, 어디서나</span></a></li>
       </ol>
 
       <div class="toc-section">부록</div>
@@ -5221,6 +5729,307 @@
 
         <div class="pn">
           <a href="#usage"><span class="lab">← 이전</span><span class="ti">비용·생산성</span></a>
+          <a class="next" href="#everyone"><span class="lab">다음 →</span><span class="ti">누구나, 어디서나</span></a>
+        </div>
+      </section>
+
+      <!-- ============= 10. EVERYONE / RESPONSIVE / ONBOARDING ============= -->
+      <section id="everyone" class="chapter">
+        <div class="ch-head"><span class="ch-glyph lavender"><svg class="i"><use href="#i-ch-everyone"/></svg></span><span class="ch-num"><span class="acc">10</span> · EVERYONE</span></div>
+        <h2 class="ch-title">누구나, 어디서나 시작합니다</h2>
+        <p class="ch-deck">처음 켠 순간부터 손에 익을 때까지, 화면 크기와 입력 방식에 상관없이 같은 친절함이 따라옵니다. 5분 온보딩 · 초보자 모드 · 5단계 자동 적응 · 모두를 위한 접근성.</p>
+
+        <!-- 10.1 ONBOARDING -->
+        <h3 class="sub">10.1 첫 만남 — 5분 안에 첫 메시지까지</h3>
+        <p class="muted">설치 직후 한 번만 거치는 마법사. 모드 선택 → 도구 연결 → 첫 워크스페이스. 건너뛰어도 <kbd>⌘,</kbd> → <em>온보딩 다시 보기</em> 로 언제든 돌아올 수 있어요.</p>
+
+        <div class="info">
+          <div class="info-cap-row">
+            <p class="info-cap">3단계 마법사 — 어디까지 했는지 항상 보여드려요</p>
+            <span class="info-tag">Fig 10.1 · 0:00 → 5:00 · 모든 단계 건너뛰기 가능</span>
+          </div>
+          <div class="onboard-flow">
+            <div class="ob-step">
+              <div class="ob-cap"><span class="num">사용 수준 고르기</span><span class="clock">~ 1:00</span></div>
+              <div class="ob-title">어떤 모드로 시작할까요?</div>
+              <div class="ob-deck">처음이면 <em>초보자</em>로 시작해보세요. 익숙해지면 한 번에 고급으로 펼칠 수 있어요.</div>
+              <div class="ob-screen">
+                <div class="ob-eyebrow">SETUP · MODE</div>
+                <div class="ob-pick sel"><span class="dot"></span><span>초보자 — 기본 기능만 보여드려요</span><span class="tag">RECOMMENDED</span></div>
+                <div class="ob-pick"><span class="dot"></span><span>고급 — 모든 옵션을 한 번에</span><span class="tag">PRO</span></div>
+                <div class="ob-pick"><span class="dot"></span><span>사용자 정의 — 직접 켜고 끄기</span><span class="tag">CUSTOM</span></div>
+              </div>
+            </div>
+
+            <div class="ob-step">
+              <div class="ob-cap"><span class="num">외부 도구 연결</span><span class="clock">~ 3:00</span></div>
+              <div class="ob-title">쓸 도구만 골라서 연결</div>
+              <div class="ob-deck">한 번 연결해두면 다음에는 자동 인식. 안 쓰는 도구는 나중에 켜도 돼요.</div>
+              <div class="ob-screen">
+                <div class="ob-eyebrow">CONNECT · OPTIONAL</div>
+                <div class="ob-conn"><span class="ico cl"></span><span>Claude CLI <code class="inline">/usr/local/bin/claude</code></span><span class="pill-mini">연결됨</span></div>
+                <div class="ob-conn"><span class="ico co"></span><span>Codex CLI <code class="inline">~/.local/bin/codex</code></span><span class="pill-mini">연결됨</span></div>
+                <div class="ob-conn"><span class="ico ob"></span><span>Obsidian Vault <code class="inline">~/Documents/Vault</code></span><span class="pill-mini">연결됨</span></div>
+                <div class="ob-conn"><span class="ico tg"></span><span>Telegram Bot</span><span class="pill-mini skip">나중에</span></div>
+              </div>
+            </div>
+
+            <div class="ob-step">
+              <div class="ob-cap"><span class="num">첫 메시지</span><span class="clock">~ 5:00</span></div>
+              <div class="ob-title">바로 첫 대화를 보내볼게요</div>
+              <div class="ob-deck">샘플 워크스페이스가 한 개 만들어져 있어요. 입력창에 한 마디 적어 보내면 끝.</div>
+              <div class="ob-screen">
+                <div class="ob-eyebrow">FIRST WORKSPACE · sample-project</div>
+                <div class="ob-pick sel" style="border-color: var(--accent)"><span class="dot"></span><span>예시 폴더로 시작 (추천)</span><span class="tag">SAMPLE</span></div>
+                <div class="ob-pick"><span class="dot"></span><span>내 폴더 직접 고르기</span><span class="tag">FOLDER</span></div>
+                <div class="ob-input">안녕하세요, 이 프로젝트 구조를 먼저 봐줄래요?<span class="cur"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout"><div class="ico"><svg class="i i-14"><use href="#i-bulb"/></svg></div><div>총 소요 시간 평균 <b>4분 17초</b>. 진행 중에 닫아도 마지막 단계가 저장돼요. 다시 켜면 거기서 이어집니다.</div></div>
+
+        <!-- 10.2 BEGINNER MODE -->
+        <h3 class="sub">10.2 초보자 모드 — 필요한 것만 먼저 보여드려요</h3>
+        <p class="muted">고급 옵션이 모두 사라지는 게 아니에요. 자주 안 쓰는 기능을 한 단 접어둘 뿐. 익숙해진 다음 사이드바 토글 한 번으로 전부 펼칠 수 있어요.</p>
+
+        <div class="info">
+          <div class="info-cap-row">
+            <p class="info-cap">초보자 모드 ON · OFF — 화면이 바뀌는 모습</p>
+            <span class="info-tag">Fig 10.2 · ⌘, → 일반 → 초보자 모드</span>
+          </div>
+          <div class="bm-pair">
+            <div class="bm-side on">
+              <div class="bm-head">
+                <span class="lab">초보자 모드</span>
+                <span class="switch">ON<span class="knob"></span></span>
+              </div>
+              <h4 class="bm-title">필요한 것만, 큼직하게</h4>
+              <p class="bm-deck">새 워크스페이스 / 채팅 / 노트 · 핵심 동작 4개만. 나머지는 <em>고급</em> 메뉴 안으로 들어가요.</p>
+              <div class="bm-mock">
+                <div class="bm-row"><span class="ico k"></span><span>새 워크스페이스</span><span class="badge">⌘N</span></div>
+                <div class="bm-row"><span class="ico c"></span><span>대화 시작</span><span class="badge">⌘K</span></div>
+                <div class="bm-row"><span class="ico p"></span><span>노트 붙이기</span><span class="badge">@</span></div>
+                <div class="bm-row"><span class="ico m"></span><span>설정</span><span class="badge">⌘,</span></div>
+                <div class="bm-divider">고급 — 펼쳐 보기</div>
+                <div class="bm-row adv"><span class="ico"></span><span>Plan mode · effort · 라우팅 …</span><span class="badge">7+</span></div>
+              </div>
+            </div>
+
+            <div class="bm-side off">
+              <div class="bm-head">
+                <span class="lab">초보자 모드</span>
+                <span class="switch">OFF<span class="knob"></span></span>
+              </div>
+              <h4 class="bm-title">전부 한 화면에</h4>
+              <p class="bm-deck">자주 쓰는 단축키 · 라우팅 · effort · plan · multi-pane · 하네스까지 펼쳐서 즉시 접근.</p>
+              <div class="bm-mock">
+                <div class="bm-row"><span class="ico k"></span><span>새 워크스페이스</span><span class="badge">⌘N</span></div>
+                <div class="bm-row"><span class="ico c"></span><span>대화 시작</span><span class="badge">⌘K</span></div>
+                <div class="bm-row"><span class="ico p"></span><span>노트 붙이기</span><span class="badge">@</span></div>
+                <div class="bm-row"><span class="ico m"></span><span>설정</span><span class="badge">⌘,</span></div>
+                <div class="bm-row"><span class="ico"></span><span>Plan mode</span><span class="badge">⌘⇧P</span></div>
+                <div class="bm-row"><span class="ico"></span><span>Effort: medium</span><span class="badge">⌘⌥E</span></div>
+                <div class="bm-row"><span class="ico"></span><span>Multi-pane 분할</span><span class="badge">⌘⌥V</span></div>
+                <div class="bm-row"><span class="ico"></span><span>라우팅 로그</span><span class="badge">7d</span></div>
+                <div class="bm-row"><span class="ico"></span><span>하네스 편집</span><span class="badge">.harness/</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-3" style="margin-top:14px">
+          <div class="card">
+            <div class="card-eyebrow">기본값</div>
+            <h4>처음 설치는 ON</h4>
+            <p>새로 시작하는 분께 부담을 주지 않으려고 기본은 켜진 상태예요. 두 번째 설치부터는 마지막 설정 그대로.</p>
+          </div>
+          <div class="card">
+            <div class="card-eyebrow">전환 시점</div>
+            <h4>어색하지 않게, 한 번에</h4>
+            <p>OFF 로 바꾼 직후엔 새 메뉴들이 잠깐 하이라이트로 깜빡여요. 어디에 뭐가 새로 생겼는지 바로 알 수 있게요.</p>
+          </div>
+          <div class="card">
+            <div class="card-eyebrow">언제든 다시</div>
+            <h4>되돌리기에 두려움 없이</h4>
+            <p>고급으로 갔다가 부담스러우면 다시 ON 하면 끝. 작업 내용은 그대로 보존돼요.</p>
+          </div>
+        </div>
+
+        <!-- 10.3 RESPONSIVE -->
+        <h3 class="sub">10.3 큰 화면, 작은 화면 — 5단계 자동 적응</h3>
+        <p class="muted">노트북·외장 모니터·스플릿 뷰 — 어디서 열든 가독성을 잃지 않게 화면 폭에 맞춰 자동 재배치. 모든 sheet 도 최소 360px·부모의 92% 안에서 안전하게 떠요.</p>
+
+        <div class="info">
+          <div class="info-cap-row">
+            <p class="info-cap">5개 레이아웃 모드 — 사이드바와 도구함이 화면에 맞춰 숨고 다시 나타나요</p>
+            <span class="info-tag">Fig 10.3 · ADR-070·072·073·074 · breakpoints in pixels</span>
+          </div>
+          <div class="layout-matrix">
+            <div class="lm-slot tiny">
+              <div class="lm-cap"><span class="name">tiny</span><span class="px">&lt; 600</span></div>
+              <div class="lm-frame tiny"><div class="lm-main"></div></div>
+              <ul class="lm-list">
+                <li>본문만 풀폭</li>
+                <li>사이드바는 하단 드로어</li>
+                <li>보조 모니터 · 분할 뷰</li>
+              </ul>
+            </div>
+            <div class="lm-slot compact">
+              <div class="lm-cap"><span class="name">compact</span><span class="px">600 ~ 760</span></div>
+              <div class="lm-frame compact"><div class="lm-main"></div></div>
+              <ul class="lm-list">
+                <li>사이드바 오버레이</li>
+                <li>버튼 한 번이면 펼침</li>
+                <li>아이패드 세로</li>
+              </ul>
+            </div>
+            <div class="lm-slot medium">
+              <div class="lm-cap"><span class="name">medium</span><span class="px">760 ~ 1080</span></div>
+              <div class="lm-frame medium"><div class="lm-side"></div><div class="lm-main"></div></div>
+              <ul class="lm-list">
+                <li>사이드바 inline</li>
+                <li>도구함은 숨김</li>
+                <li>13인치 노트북</li>
+              </ul>
+            </div>
+            <div class="lm-slot regular">
+              <div class="lm-cap"><span class="name">regular</span><span class="px">1080 ~ 1440</span></div>
+              <div class="lm-frame regular"><div class="lm-side"></div><div class="lm-main"></div></div>
+              <ul class="lm-list">
+                <li>표준 작업 환경</li>
+                <li>도구함은 ⌘⌥2</li>
+                <li>15인치 노트북</li>
+              </ul>
+            </div>
+            <div class="lm-slot wide">
+              <div class="lm-cap"><span class="name">wide</span><span class="px">≥ 1440</span></div>
+              <div class="lm-frame wide"><div class="lm-side"></div><div class="lm-main"></div><div class="lm-insp"></div></div>
+              <ul class="lm-list">
+                <li>모두 동시에 inline</li>
+                <li>multi-pane 활짝</li>
+                <li>외장 모니터</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-2" style="margin-top:14px">
+          <div class="card">
+            <div class="card-eyebrow">SHEET 안전판</div>
+            <h4>좁은 화면에서도 잘림 없이</h4>
+            <p>모든 sheet 는 <code class="inline">absoluteMinWidth = 360px</code> · <code class="inline">maxOfParentRatio = 0.92</code> 로 떠요. 320px 폭의 사이드 화면에서도 화면 밖으로 잘리지 않습니다.</p>
+          </div>
+          <div class="card">
+            <div class="card-eyebrow">전환 애니메이션</div>
+            <h4>모드 사이를 미끄러지듯</h4>
+            <p>사용자가 창을 줄이면 사이드바가 사라지고, 다시 늘리면 같은 자리에 부드럽게 복귀해요. 로딩 깜빡임 없이.</p>
+          </div>
+        </div>
+
+        <!-- 10.4 A11Y -->
+        <h3 class="sub">10.4 모두를 위한 길</h3>
+        <p class="muted">눈으로 못 보는 분, 마우스를 못 쓰는 분, 키보드만 쓰는 분 — 같은 가이드를 같은 방법으로 따라올 수 있게요. WCAG 2.2 AA 통과, VoiceOver · Voice Control 전 화면 매핑.</p>
+
+        <div class="info">
+          <div class="info-cap-row">
+            <p class="info-cap">접근성 4가지 기둥 — 각각 어떤 분께 닿는지</p>
+            <span class="info-tag">Fig 10.4 · ADR-071·072 · 모든 인터랙티브 요소 audit</span>
+          </div>
+          <div class="a11y-pillars">
+            <div class="a11y-card contrast">
+              <div class="a11y-cap">
+                <span class="glyph"><svg class="i i-18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M 12 3 L 12 21" fill="currentColor"/></svg></span>
+                <span class="name">대비 — Contrast</span>
+              </div>
+              <h4 class="h">눈이 편한 색만 통과시켜요</h4>
+              <p class="d">WCAG 2.2 AA 기준 <em>4.5:1</em> 이상만 본문 색으로 채택. 모든 Theme.Color 가 audit 을 거쳐요.</p>
+              <div class="a11y-demo">
+                <div class="ct-stack">
+                  <div class="ct-row pass"><span>본문 — <code class="inline">#F0EEEC on #1A1817</code></span><span class="ratio">14.6 : 1 ✓</span></div>
+                  <div class="ct-row pass"><span>보조 — <code class="inline">#A8A3A0 on #1A1817</code></span><span class="ratio">7.8 : 1 ✓</span></div>
+                  <div class="ct-row fail"><span>흐림 — <code class="inline">#5A5450 on #1A1817</code></span><span class="ratio">3.1 : 1 ✗</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="a11y-card voice">
+              <div class="a11y-cap">
+                <span class="glyph"><svg class="i i-18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M 4 12 C 4 7 8 4 12 4 C 16 4 20 7 20 12"/><path d="M 4 14 L 7 14 L 7 19 L 4 19 Z M 17 14 L 20 14 L 20 19 L 17 19 Z"/></svg></span>
+                <span class="name">VoiceOver</span>
+              </div>
+              <h4 class="h">화면을 못 봐도 길을 잃지 않게</h4>
+              <p class="d">버튼·아이콘·상태 변화까지 모두 라벨이 달려 있어요. 의미 있는 순서로 읽어드립니다.</p>
+              <div class="a11y-demo">
+                <div class="vo-sample">
+                  <span class="qt">VO 읽음</span>
+                  <span class="body">"클로드 보내기 버튼, 누르면 메시지를 보냅니다, ⌘⏎ 단축키"</span>
+                </div>
+                <div class="vo-sample">
+                  <span class="qt">상태 변화</span>
+                  <span class="body">"텔레그램 연결 상태가 정상으로 바뀌었어요"</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="a11y-card vctl">
+              <div class="a11y-cap">
+                <span class="glyph"><svg class="i i-18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M 5 11 C 5 15 8 18 12 18 C 16 18 19 15 19 11"/><path d="M 12 18 L 12 21 M 9 21 L 15 21"/></svg></span>
+                <span class="name">Voice Control</span>
+              </div>
+              <h4 class="h">손이 멀어도 입으로</h4>
+              <p class="d">macOS Voice Control 명령이 모든 기능에 연결돼 있어요. 음성으로 워크스페이스 전환·전송까지.</p>
+              <div class="a11y-demo">
+                <div class="vc-list">
+                  <div class="vc-cmd"><span class="say">SAY</span><span>"새 대화"</span></div>
+                  <div class="vc-cmd"><span class="say">SAY</span><span>"코덱스로 보내"</span></div>
+                  <div class="vc-cmd"><span class="say">SAY</span><span>"이 답변 저장"</span></div>
+                  <div class="vc-cmd"><span class="say">SAY</span><span>"다음 워크스페이스"</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="a11y-card focus">
+              <div class="a11y-cap">
+                <span class="glyph"><svg class="i i-18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="3"/></svg></span>
+                <span class="name">Focus 표시</span>
+              </div>
+              <h4 class="h">키보드만 써도 어디 있는지 환하게</h4>
+              <p class="d">탭으로 이동할 때 현재 위치가 노란 링으로 또렷하게 표시돼요. 마우스 사용자에겐 보이지 않습니다.</p>
+              <div class="a11y-demo">
+                <div class="fr-demo">
+                  <div class="fr-btn">일반 상태</div>
+                  <div class="fr-btn foc">탭으로 도착</div>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:0 4px"><span class="fr-tag">대기</span><span class="fr-tag on">FOCUSED · TAB</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pull">접근성은 옵션이 아니라 <em>기본값</em>입니다. 새 기능을 추가할 때마다 이 4가지 기둥부터 점검합니다.</div>
+
+        <div class="grid grid-3" style="margin-top:14px">
+          <div class="card">
+            <div class="card-eyebrow">감사 빈도</div>
+            <h4>매 릴리즈마다 audit</h4>
+            <p>색대비·VoiceOver 라벨·Voice Control 명령·Focus order 4개 항목을 자동 테스트로 검증해요. 통과 못 하면 머지 못 합니다.</p>
+          </div>
+          <div class="card">
+            <div class="card-eyebrow">단축키</div>
+            <h4>마우스 없이도 모든 기능</h4>
+            <p>30개 넘는 단축키 (<a href="#shortcuts">A 챕터</a> 참고) 가 마우스 동작을 모두 대체합니다. 키보드만으로 워크플로우 완결.</p>
+          </div>
+          <div class="card">
+            <div class="card-eyebrow">제보 채널</div>
+            <h4>읽히지 않는 곳을 알려주세요</h4>
+            <p>VoiceOver가 어색하게 읽거나 색이 흐릿하게 보이면 <kbd>⌘,</kbd> → 도움 → 접근성 피드백 으로 한 줄 보내주세요. 다음 릴리즈에 반영합니다.</p>
+          </div>
+        </div>
+
+        <div class="pn">
+          <a href="#advanced"><span class="lab">← 이전</span><span class="ti">고급 자동화</span></a>
           <a class="next" href="#shortcuts"><span class="lab">다음 →</span><span class="ti">단축키</span></a>
         </div>
       </section>
@@ -5287,7 +6096,7 @@
         <div class="callout" style="margin-top:20px"><div class="ico"><svg class="i i-14"><use href="#i-bulb"/></svg></div><div>열린 창은 모두 <kbd>Esc</kbd>로 닫혀요. 가이드 본문에서도 단축키는 같은 모양의 코드 글씨로 보여드려요.</div></div>
 
         <div class="pn">
-          <a href="#advanced"><span class="lab">← 이전</span><span class="ti">고급 자동화</span></a>
+          <a href="#everyone"><span class="lab">← 이전</span><span class="ti">누구나, 어디서나</span></a>
           <a class="next" href="#troubleshoot"><span class="lab">다음 →</span><span class="ti">문제 해결</span></a>
         </div>
       </section>
